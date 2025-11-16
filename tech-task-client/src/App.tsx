@@ -1,18 +1,22 @@
-import { Link, Route, Routes, useNavigate } from 'react-router-dom';
-import './App.css';
+import { Link, Route, Routes } from 'react-router-dom';
+import './App.scss';
 import TasksListSubPage from './sub-pages/tasks-list-subpage';
 import TaskDetailsSubPage from './sub-pages/task-details-subpage';
 import CreateTaskSubPage from './sub-pages/create-task-subpage';
 import { BsPlus } from 'react-icons/bs';
+import { ToastContainer } from 'react-toastify';
+import { ReactComponent as Logo } from './logo.svg';
 
 function App(): JSX.Element {
-    const navigate = useNavigate();
-    
+
     return (
         <div className="App">
             <div className="header">
-                <Link to="/" className="header-text">Tasks Tracker</Link>
-                <Link to="/create" className="add-task-button"><BsPlus className="plus-icon" /> New Task</Link>
+                <Link to="/" className="header-text-logo">
+                    <Logo className="app-logo" />
+                    TasksTracker
+                </Link>
+                <span className="sub-header">Simple Task Management</span>
             </div>
             <div className="body">
                 <Routes>
@@ -20,7 +24,8 @@ function App(): JSX.Element {
                     <Route path="/:taskId" element={<TaskDetailsSubPage />} />
                     <Route path="/create" element={<CreateTaskSubPage />} />
                 </Routes>
-            </div>           
+            </div>
+            <ToastContainer />
         </div>
     );
 }

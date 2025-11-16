@@ -1,13 +1,13 @@
 // a custom checkbox component
-import './checkbox.css';
+import './checkbox.scss';
 
-export default function Checkbox(props: { checked: boolean; onChange: (checked: boolean) => void }): JSX.Element {
+export default function Checkbox(props: { checked: boolean; onChange: (checked: boolean) => void; containerClassName?: string }): JSX.Element {
     function handleToggle(e: React.MouseEvent) {
         e.stopPropagation();
         props.onChange(!props.checked);
     }
 
-    return <label className="custom-checkbox" onClick={handleToggle}>
-        { props.checked && <span className="✓">✓</span>}
-    </label>;
+    return <div className={`custom-checkbox ${props.containerClassName}`} onClick={handleToggle}>
+        {props.checked && <span className="checkmark">✓</span>}
+    </div>;
 }

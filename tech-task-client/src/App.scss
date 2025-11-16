@@ -1,0 +1,64 @@
+.App {
+  height: 100vh;
+  overflow: hidden;
+
+  .header {
+    height: 10%;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e7e9eb;
+    margin: auto;
+    justify-content: space-between;
+    min-width: 1200px;
+    max-width: 1300px;
+  }
+
+   @media (max-width: 480px) {
+    .header {
+      width: 95%;
+    }
+
+    .sub-header {
+      display: none;
+    }
+  }
+
+  @media (max-width: 1199px) and (min-width: 481px) {
+    .header {
+      width: 95%;
+      min-width: unset;
+    }
+  } 
+
+  .header-text-logo {
+    color: #000;
+    font-size: 24px;
+    font-weight: 600;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .body {
+    height: 90%;
+    position: relative;
+    background-color: #fafafa;
+  }
+
+  .app-logo {
+    color: #2563eb;
+  }
+
+  .plus-icon {
+    font-size: 28px;
+    margin-right: 12px;
+  }
+
+  .sub-header {
+    font-size: 14px;
+    color: #64748b;
+    margin-right: 20px;
+  }
+
+}

@@ -1,9 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Checkbox from "../components/miscs/checkbox";
 import { Controller, useForm } from "react-hook-form";
 import { FaRegSave } from "react-icons/fa";
 
-import "./create-task-subpage.css";
+import "./create-task-subpage.scss";
+import { Task } from "../types/Task";
+import TaskService from "../services/taskService";
+import { useNavigate } from "react-router-dom";
+import { Bounce, toast } from "react-toastify";
 
 export default function CreateTaskSubPage(): JSX.Element {
     const {
@@ -12,33 +16,53 @@ export default function CreateTaskSubPage(): JSX.Element {
         control,
         formState: { errors },
         reset
-    } = useForm<{
-        title: string;
-        description: string;
-        completed: boolean;
-    }>();
+    } = useForm<Omit<Task, "id">>();
     const [savePending, setSavePending] = useState(false);
+    const navigate = useNavigate();
 
-    useEffect(() => {
-
-    }, []);
-
-    const onSubmit = (data: { title: string; description: string; completed: boolean }) => {
+    const onSubmit = (data: Omit<Task, "id">) => {
         // Disables the save button to prevent multiple submissions
         setSavePending(true);
+        TaskService.createTask(data).then(() => {
+            navigate("/");
+            toast.success('Task created successfully', {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+            });
+        }).catch((err) => {
+            setSavePending(false);
+            toast.error(`Error creating task: ${err.message}`, {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+            });
+        });
     };
 
     const onReset = () => {
         reset();
     };
 
-    return <div className="create-task-subpage">
+    return (<div className="create-task-subpage">
         <div className="content">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="task-details-container">
                     <div className="field">
                         <label>Title</label>
-                        <input className="field-value" type="text" {...register("title", {
+                        <input className="field-value" placeholder="Enter task title" type="text" {...register("title", {
                             required: "Title is required",
                             minLength: {
                                 value: 3,
@@ -53,7 +77,7 @@ export default function CreateTaskSubPage(): JSX.Element {
                     </div>
                     <div className="field">
                         <label>Description</label>
-                        <textarea className="field-value" {...register("description")}></textarea>
+                        <textarea className="field-value" placeholder="Enter task description" {...register("description")}></textarea>
                     </div>
                     <div className="field">
                         <label>Completed</label>
@@ -70,5 +94,5 @@ export default function CreateTaskSubPage(): JSX.Element {
                 </div>
             </form>
         </div>
-    </div>;
+    </div>);
 }
