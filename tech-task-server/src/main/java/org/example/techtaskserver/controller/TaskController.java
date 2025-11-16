@@ -7,6 +7,7 @@ import org.example.techtaskserver.dto.TaskListGet;
 import org.example.techtaskserver.dto.TaskUpdate;
 import org.example.techtaskserver.service.TaskService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -51,14 +52,14 @@ public class TaskController {
     @ApiResponse(responseCode = "404", description = "Task not found")
     @PutMapping("/{id}")
     public ResponseEntity<TaskGet> updateTask(@Parameter(description = "Id of task to update") @PathVariable Long id,
-                                              @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Task payload to update") @RequestBody TaskUpdate task) {
+                                              @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Task payload to update") @Validated @RequestBody TaskUpdate task) {
         return ResponseEntity.ok(taskService.updateTask(id, task));
     }
 
     @Operation(summary = "Create task", description = "Creates a new task")
     @ApiResponse(responseCode = "201", description = "Task created")
     @PostMapping
-    public ResponseEntity<TaskGet> createTask(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Task payload to create") @RequestBody TaskInsert task) {
+    public ResponseEntity<TaskGet> createTask(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Task payload to create") @Validated @RequestBody TaskInsert task) {
         return ResponseEntity.status(201).body(taskService.createTask(task));
     }
 }

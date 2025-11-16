@@ -4,8 +4,8 @@ import Checkbox from "../components/miscs/checkbox";
 import { Controller, useForm } from "react-hook-form";
 import { FaRegSave } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
-import TaskService from "../services/taskService";
-import { Task } from "../types/Task";
+import TaskService from "../services/task-service";
+import { Task } from "../types/task";
 import { toast } from "react-toastify";
 
 export default function TaskDetailsSubPage(): JSX.Element {

@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import Task from "../components/task";
 
 import './tasks-list-subpage.scss';
-import TaskService from "../services/taskService";
-import { Task as TaskType } from "../types/Task";
+import TaskService from "../services/task-service";
+import { Task as TaskType } from "../types/task";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { BsPlus } from "react-icons/bs";

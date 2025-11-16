@@ -1,11 +1,11 @@
 import { useState } from 'react';
+import { Task as TaskType } from '../types/task';
 import Checkbox from './miscs/checkbox';
 import './task.scss';
 import { BsChevronRight } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { MdOutlineDeleteForever } from 'react-icons/md';
-import { Task as TaskType } from '../types/Task';
-import TaskService from '../services/taskService';
+import TaskService from '../services/task-service';
 import { toast } from 'react-toastify';
 
 export default function Task(props: { task: TaskType, onTaskDeleted: () => void }): JSX.Element {

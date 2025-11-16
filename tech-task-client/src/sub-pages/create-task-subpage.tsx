@@ -4,8 +4,8 @@ import { Controller, useForm } from "react-hook-form";
 import { FaRegSave } from "react-icons/fa";
 
 import "./create-task-subpage.scss";
-import { Task } from "../types/Task";
-import TaskService from "../services/taskService";
+import { Task } from "../types/task";
+import TaskService from "../services/task-service";
 import { useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
 

@@ -1,4 +1,4 @@
-import { Task } from "../types/Task";
+import { Task } from "../types/task";
 import axiosApiClient from "../utils/axios-api-client";
 
 export function getTasks(): Promise<{tasks: Task[]}> {

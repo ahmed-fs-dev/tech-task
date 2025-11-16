@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  server:
+    build:
+      context: ./tech-task-server
+    ports:
+      - "8080:8080"
+    environment:
+      - JAVA_OPTS=-Xmx512m
+    restart: unless-stopped
+
+  client:
+    build:
+      context: ./tech-task-client
+    ports:
+      - "3000:80"
+    depends_on:
+      - server
+    restart: unless-stopped
