@@ -1,5 +1,6 @@
 package org.example.techtaskserver.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -11,10 +12,15 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(description = "Payload to update an existing task")
 public class TaskUpdate {
     @NotBlank(message = "Title cannot be empty")
     @Size(min = 3, max = 50, message = "Title must have 2 to 50 characters")
+    @Schema(description = "Title of the task", example = "Buy groceries", required = true)
     private String title;
+    @Schema(description = "Detailed description", example = "Buy milk and eggs")
     private String description;
+
+    @Schema(description = "Whether the task is completed", example = "false")
     private boolean completed;
 }
