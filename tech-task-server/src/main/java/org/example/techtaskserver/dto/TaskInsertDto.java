@@ -1,5 +1,7 @@
 package org.example.techtaskserver.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,14 +13,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "Task read model returned by API")
-public class TaskGet {
-    @Schema(description = "Task identifier", example = "1")
-    private Long id;
-
-    @Schema(description = "Title of the task", example = "Buy groceries")
+@Schema(description = "Payload to create a new task")
+public class TaskInsertDto {
+    @NotBlank(message = "Title cannot be empty")
+    @Size(min = 3, max = 50, message = "Title must have 2 to 50 characters")
+    @Schema(description = "Title of the task", example = "Buy groceries", required = true)
     private String title;
 
+    @Size(max = 255, message = "Description must have up to 255 characters")
     @Schema(description = "Detailed description", example = "Buy milk and eggs")
     private String description;
 

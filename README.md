@@ -12,6 +12,7 @@ It demonstrates how to integrate a RESTful Spring Boot API with a modern React f
 ---
 
 ## 🧱 Project Structure
+```text
 tech-task/
 ├── backend/ # Spring Boot application (REST API)
 │ ├── src/
@@ -43,10 +44,7 @@ tech-task/
 │
 ├── .gitignore
 └── README.md
-
-yaml
-Copy code
-
+```
 ---
 
 ## ⚙️ Tech Stack & Justification
@@ -101,10 +99,9 @@ Copy code
 ```bash
 git clone https://github.com/ahmed-fs-dev/tech-task.git
 cd ./tech-task
-2️⃣ Run the full application using Docker Compose
-Ensure Docker and Docker Compose are installed.
 ```
-bash
-```
+
+### 2️⃣ Run the full application using Docker Compose Ensure Docker and Docker Compose are installed.
+```bash
 docker-compose up --build
 ```

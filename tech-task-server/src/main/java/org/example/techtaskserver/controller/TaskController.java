@@ -1,10 +1,10 @@
 package org.example.techtaskserver.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.techtaskserver.dto.TaskGet;
-import org.example.techtaskserver.dto.TaskInsert;
-import org.example.techtaskserver.dto.TaskListGet;
-import org.example.techtaskserver.dto.TaskUpdate;
+import org.example.techtaskserver.dto.TaskGetDto;
+import org.example.techtaskserver.dto.TaskInsertDto;
+import org.example.techtaskserver.dto.TaskListGetDto;
+import org.example.techtaskserver.dto.TaskUpdateDto;
 import org.example.techtaskserver.service.TaskService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -27,7 +27,7 @@ public class TaskController {
     @ApiResponse(responseCode = "200", description = "Task found")
     @ApiResponse(responseCode = "404", description = "Task not found")
     @GetMapping("/{id}")
-    public ResponseEntity<TaskGet> getTaskById(@Parameter(description = "Id of task to retrieve") @PathVariable("id") Long id) {
+    public ResponseEntity<TaskGetDto> getTaskById(@Parameter(description = "Id of task to retrieve") @PathVariable("id") Long id) {
         return ResponseEntity.ok(taskService.getTaskById(id));
     }
 
@@ -43,7 +43,7 @@ public class TaskController {
     @Operation(summary = "List tasks", description = "Returns a list of tasks")
     @ApiResponse(responseCode = "200", description = "List returned")
     @GetMapping
-    public ResponseEntity<TaskListGet> listTasks() {
+    public ResponseEntity<TaskListGetDto> listTasks() {
         return ResponseEntity.ok(taskService.listTasks());
     }
 
@@ -51,15 +51,15 @@ public class TaskController {
     @ApiResponse(responseCode = "200", description = "Task updated")
     @ApiResponse(responseCode = "404", description = "Task not found")
     @PutMapping("/{id}")
-    public ResponseEntity<TaskGet> updateTask(@Parameter(description = "Id of task to update") @PathVariable Long id,
-                                              @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Task payload to update") @Validated @RequestBody TaskUpdate task) {
+    public ResponseEntity<TaskGetDto> updateTask(@Parameter(description = "Id of task to update") @PathVariable Long id,
+                                                 @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Task payload to update") @Validated @RequestBody TaskUpdateDto task) {
         return ResponseEntity.ok(taskService.updateTask(id, task));
     }
 
     @Operation(summary = "Create task", description = "Creates a new task")
     @ApiResponse(responseCode = "201", description = "Task created")
     @PostMapping
-    public ResponseEntity<TaskGet> createTask(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Task payload to create") @Validated @RequestBody TaskInsert task) {
+    public ResponseEntity<TaskGetDto> createTask(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Task payload to create") @Validated @RequestBody TaskInsertDto task) {
         return ResponseEntity.status(201).body(taskService.createTask(task));
     }
 }

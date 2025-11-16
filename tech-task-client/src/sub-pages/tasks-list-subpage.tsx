@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { BsPlus } from "react-icons/bs";
 import { PiEmpty, PiEmptyBold, PiEmptyFill } from "react-icons/pi";
+import { getErrorMessageForUser } from "../utils/error-utils";
 
 
 
@@ -22,7 +23,7 @@ export default function TasksListSubPage(): JSX.Element {
         TaskService.getTasks().then((data) => {
             setTasks(data.tasks);
         }).catch((err) => {
-            toast.error(`Error fetching tasks: ${err.message}`, {
+            toast.error(`Error fetching tasks: ${getErrorMessageForUser(err)}`, {
                 position: "bottom-center",
                 autoClose: 5000,
                 hideProgressBar: true,

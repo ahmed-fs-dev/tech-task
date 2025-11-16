@@ -14,7 +14,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(description = "Container for a list of tasks")
-public class TaskListGet {
+public class TaskListGetDto {
     @Schema(description = "Tasks returned by the list endpoint")
-    private List<TaskGet> tasks;
+    private List<TaskGetDto> tasks;
 }

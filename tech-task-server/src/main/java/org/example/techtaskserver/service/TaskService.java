@@ -1,14 +1,14 @@
 package org.example.techtaskserver.service;
 
-import org.example.techtaskserver.dto.TaskGet;
-import org.example.techtaskserver.dto.TaskInsert;
-import org.example.techtaskserver.dto.TaskListGet;
-import org.example.techtaskserver.dto.TaskUpdate;
+import org.example.techtaskserver.dto.TaskGetDto;
+import org.example.techtaskserver.dto.TaskInsertDto;
+import org.example.techtaskserver.dto.TaskListGetDto;
+import org.example.techtaskserver.dto.TaskUpdateDto;
 
 public interface TaskService {
     public void deleteTaskById(Long id);
-    public TaskGet getTaskById(Long id);
-    public TaskListGet listTasks();
-    public TaskGet createTask(TaskInsert task);
-    public TaskGet updateTask(Long id, TaskUpdate task);
+    public TaskGetDto getTaskById(Long id);
+    public TaskListGetDto listTasks();
+    public TaskGetDto createTask(TaskInsertDto task);
+    public TaskGetDto updateTask(Long id, TaskUpdateDto task);
 }

@@ -23,6 +23,7 @@ function App(): JSX.Element {
                     <Route path="/" element={<TasksListSubPage />} />
                     <Route path="/:taskId" element={<TaskDetailsSubPage />} />
                     <Route path="/create" element={<CreateTaskSubPage />} />
+                    <Route path="/*" element={<div>404 Page not found</div>} />
                 </Routes>
             </div>
             <ToastContainer />

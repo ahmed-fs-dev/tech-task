@@ -8,6 +8,7 @@ import { Task } from "../types/task";
 import TaskService from "../services/task-service";
 import { useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
+import { getErrorMessageForUser } from "../utils/error-utils";
 
 export default function CreateTaskSubPage(): JSX.Element {
     const {
@@ -38,7 +39,7 @@ export default function CreateTaskSubPage(): JSX.Element {
             });
         }).catch((err) => {
             setSavePending(false);
-            toast.error(`Error creating task: ${err.message}`, {
+            toast.error(`Error creating task: ${getErrorMessageForUser(err)}`, {
                 position: "bottom-center",
                 autoClose: 5000,
                 hideProgressBar: true,
@@ -77,7 +78,13 @@ export default function CreateTaskSubPage(): JSX.Element {
                     </div>
                     <div className="field">
                         <label>Description</label>
-                        <textarea className="field-value" placeholder="Enter task description" {...register("description")}></textarea>
+                        <textarea className="field-value" placeholder="Enter task description" {...register("description", {
+                            maxLength: {
+                                value: 255,
+                                message: "Description must be at most 255 characters"
+                            }
+                        })}></textarea>
+                    {errors.description && <p style={{ color: "red" }}>{errors.description.message}</p>}
                     </div>
                     <div className="field">
                         <label>Completed</label>

@@ -1,9 +1,9 @@
 package org.example.techtaskserver.controller;
 
-import org.example.techtaskserver.dto.TaskGet;
-import org.example.techtaskserver.dto.TaskInsert;
-import org.example.techtaskserver.dto.TaskListGet;
-import org.example.techtaskserver.dto.TaskUpdate;
+import org.example.techtaskserver.dto.TaskGetDto;
+import org.example.techtaskserver.dto.TaskInsertDto;
+import org.example.techtaskserver.dto.TaskListGetDto;
+import org.example.techtaskserver.dto.TaskUpdateDto;
 import org.example.techtaskserver.service.TaskService;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -27,40 +27,40 @@ class TaskControllerTest {
 
     @Test
     void testListTasks() {
-        TaskListGet listGet = TaskListGet.builder().tasks(Collections.emptyList()).build();
+        TaskListGetDto listGet = TaskListGetDto.builder().tasks(Collections.emptyList()).build();
         when(taskService.listTasks()).thenReturn(listGet);
-        ResponseEntity<TaskListGet> response = taskController.listTasks();
+        ResponseEntity<TaskListGetDto> response = taskController.listTasks();
         assertEquals(200, response.getStatusCode().value());
         assertEquals(listGet, response.getBody());
     }
 
     @Test
     void testGetTaskById() {
-        TaskGet taskGet = TaskGet.builder().id(1L).title("A").build();
-        when(taskService.getTaskById(1L)).thenReturn(taskGet);
-        ResponseEntity<TaskGet> response = taskController.getTaskById(1L);
+        TaskGetDto taskGetDto = TaskGetDto.builder().id(1L).title("A").build();
+        when(taskService.getTaskById(1L)).thenReturn(taskGetDto);
+        ResponseEntity<TaskGetDto> response = taskController.getTaskById(1L);
         assertEquals(200, response.getStatusCode().value());
-        assertEquals(taskGet, response.getBody());
+        assertEquals(taskGetDto, response.getBody());
     }
 
     @Test
     void testCreateTask() {
-        TaskInsert insert = TaskInsert.builder().title("A").build();
-        TaskGet taskGet = TaskGet.builder().id(1L).title("A").build();
-        when(taskService.createTask(insert)).thenReturn(taskGet);
-        ResponseEntity<TaskGet> response = taskController.createTask(insert);
+        TaskInsertDto insert = TaskInsertDto.builder().title("A").build();
+        TaskGetDto taskGetDto = TaskGetDto.builder().id(1L).title("A").build();
+        when(taskService.createTask(insert)).thenReturn(taskGetDto);
+        ResponseEntity<TaskGetDto> response = taskController.createTask(insert);
         assertEquals(200, response.getStatusCode().value());
-        assertEquals(taskGet, response.getBody());
+        assertEquals(taskGetDto, response.getBody());
     }
 
     @Test
     void testUpdateTask() {
-        TaskUpdate update = TaskUpdate.builder().title("Updated").build();
-        TaskGet taskGet = TaskGet.builder().id(1L).title("Updated").build();
-        when(taskService.updateTask(1L, update)).thenReturn(taskGet);
-        ResponseEntity<TaskGet> response = taskController.updateTask(1L, update);
+        TaskUpdateDto update = TaskUpdateDto.builder().title("Updated").build();
+        TaskGetDto taskGetDto = TaskGetDto.builder().id(1L).title("Updated").build();
+        when(taskService.updateTask(1L, update)).thenReturn(taskGetDto);
+        ResponseEntity<TaskGetDto> response = taskController.updateTask(1L, update);
         assertEquals(200, response.getStatusCode().value());
-        assertEquals(taskGet, response.getBody());
+        assertEquals(taskGetDto, response.getBody());
     }
 
     @Test

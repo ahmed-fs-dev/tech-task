@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import TaskService from "../services/task-service";
 import { Task } from "../types/task";
 import { toast } from "react-toastify";
+import { getErrorMessageForUser } from "../utils/error-utils";
 
 export default function TaskDetailsSubPage(): JSX.Element {
     const {
@@ -25,8 +26,19 @@ export default function TaskDetailsSubPage(): JSX.Element {
         TaskService.getTaskById(Number(taskId)).then((task) => {
             reset(task);
             savedTaskData.current = task;
+            setDataIsLoaded(true);
+        }).catch((err) => {
+            toast.error(`Error retrieving task: ${getErrorMessageForUser(err)}`, {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
         });
-        setDataIsLoaded(true);
     }, []);
 
     const onSubmit = (data: Omit<Task, "id">) => {
@@ -42,6 +54,16 @@ export default function TaskDetailsSubPage(): JSX.Element {
                 theme: "light",
             });
         }).catch((err) => {
+            toast.error(`Error updating task: ${getErrorMessageForUser(err)}`, {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
         });
     };
 
@@ -67,7 +89,7 @@ export default function TaskDetailsSubPage(): JSX.Element {
                 });
                 navigate("/");
             }).catch((err) => {
-                toast.error(`Error deleting task: ${err.message}`, {
+                toast.error(`Error deleting task: ${getErrorMessageForUser(err)}`, {
                     position: "bottom-center",
                     autoClose: 5000,
                     hideProgressBar: true,
@@ -102,7 +124,13 @@ export default function TaskDetailsSubPage(): JSX.Element {
                 </div>
                 <div className="field">
                     <label>Description</label>
-                    <textarea className="field-value" {...register("description")}></textarea>
+                    <textarea className="field-value" {...register("description", {
+                        maxLength: {
+                            value: 255,
+                            message: "Description must be at most 255 characters"
+                        }
+                    })}></textarea>
+                    {errors.description && <p style={{ color: "red" }}>{errors.description.message}</p>}
                 </div>
                 <div className="field">
                     <label>Completed</label>

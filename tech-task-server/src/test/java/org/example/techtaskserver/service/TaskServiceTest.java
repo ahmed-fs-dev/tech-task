@@ -1,9 +1,9 @@
 package org.example.techtaskserver.service;
 
-import org.example.techtaskserver.dto.TaskGet;
-import org.example.techtaskserver.dto.TaskInsert;
-import org.example.techtaskserver.dto.TaskListGet;
-import org.example.techtaskserver.dto.TaskUpdate;
+import org.example.techtaskserver.dto.TaskGetDto;
+import org.example.techtaskserver.dto.TaskInsertDto;
+import org.example.techtaskserver.dto.TaskListGetDto;
+import org.example.techtaskserver.dto.TaskUpdateDto;
 import org.example.techtaskserver.exception.ResourceNotFoundException;
 import org.example.techtaskserver.model.Task;
 import org.example.techtaskserver.repository.TaskRepository;
@@ -33,8 +33,8 @@ class TaskServiceTest {
     void testGetTaskById_Success() {
         Task task = Task.builder().id(1L).title("Test").description("Desc").completed(false).build();
         when(taskRepository.findById(1L)).thenReturn(Optional.of(task));
-        TaskGet expected = modelMapper.map(task, TaskGet.class);
-        TaskGet result = taskService.getTaskById(1L);
+        TaskGetDto expected = modelMapper.map(task, TaskGetDto.class);
+        TaskGetDto result = taskService.getTaskById(1L);
         assertEquals(expected, result);
     }
 
@@ -62,31 +62,31 @@ class TaskServiceTest {
     void testListTasks() {
         Task task = Task.builder().id(1L).title("Test").description("Desc").completed(false).build();
         when(taskRepository.findAll()).thenReturn(List.of(task));
-        TaskGet taskGet = modelMapper.map(task, TaskGet.class);
-        TaskListGet result = taskService.listTasks();
+        TaskGetDto taskGetDto = modelMapper.map(task, TaskGetDto.class);
+        TaskListGetDto result = taskService.listTasks();
         assertEquals(1, result.getTasks().size());
-        assertEquals(taskGet, result.getTasks().get(0));
+        assertEquals(taskGetDto, result.getTasks().get(0));
     }
 
     @Test
     void testCreateTask() {
-        TaskInsert insert = TaskInsert.builder().title("New").description("Desc").completed(false).build();
+        TaskInsertDto insert = TaskInsertDto.builder().title("New").description("Desc").completed(false).build();
         Task savedTask = Task.builder().id(1L).title("New").description("Desc").completed(false).build();
         when(taskRepository.save(any(Task.class))).thenReturn(savedTask);
-        TaskGet expected = modelMapper.map(savedTask, TaskGet.class);
-        TaskGet result = taskService.createTask(insert);
+        TaskGetDto expected = modelMapper.map(savedTask, TaskGetDto.class);
+        TaskGetDto result = taskService.createTask(insert);
         assertEquals(expected, result);
     }
 
     @Test
     void testUpdateTask() {
-        TaskUpdate update = TaskUpdate.builder().title("Updated").description("Desc").completed(true).build();
+        TaskUpdateDto update = TaskUpdateDto.builder().title("Updated").description("Desc").completed(true).build();
         Task updatedTask = modelMapper.map(update, Task.class);
         updatedTask.setId(1L);
         Task savedTask = Task.builder().id(1L).title("Updated").description("Desc").completed(true).build();
         when(taskRepository.save(any(Task.class))).thenReturn(savedTask);
-        TaskGet expected = modelMapper.map(savedTask, TaskGet.class);
-        TaskGet result = taskService.updateTask(1L, update);
+        TaskGetDto expected = modelMapper.map(savedTask, TaskGetDto.class);
+        TaskGetDto result = taskService.updateTask(1L, update);
         assertEquals(expected, result);
     }
 }
